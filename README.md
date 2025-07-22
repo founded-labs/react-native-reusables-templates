@@ -1,6 +1,6 @@
 # React Native Reusables Templates
 
-Templates for building universal apps with [React Native Reusables](https://github.com/founded-labs/react-native-reusables).
+Templates for building universal apps with [React Native Reusables](https://www.reactnativereusables.com).
 
 ## Getting Started
 

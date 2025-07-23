@@ -27,16 +27,15 @@ const textVariants = cva(
         ),
         h3: cn('text-2xl font-semibold tracking-tight', Platform.select({ web: 'scroll-m-20' })),
         h4: cn('text-xl font-semibold tracking-tight', Platform.select({ web: 'scroll-m-20' })),
-        p: 'leading-7 mt-3 sm:mt-6',
-        blockquote: 'mt-4 sm:mt-6 border-l-2 pl-3 sm:pl-6 italic',
+        p: 'mt-3 leading-7 sm:mt-6',
+        blockquote: 'mt-4 border-l-2 pl-3 italic sm:mt-6 sm:pl-6',
         code: cn(
-          'bg-muted relative rounded px-[0.3rem] py-[0.2rem] text-sm font-semibold',
-          Platform.select({ android: 'font-sans', default: 'font-mono' })
+          'relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold'
         ),
-        lead: 'text-muted-foreground text-xl',
+        lead: 'text-xl text-muted-foreground',
         large: 'text-lg font-semibold',
-        small: 'text-sm leading-none font-medium',
-        muted: 'text-muted-foreground text-sm',
+        small: 'text-sm font-medium leading-none',
+        muted: 'text-sm text-muted-foreground',
       },
     },
     defaultVariants: {
@@ -44,6 +43,26 @@ const textVariants = cva(
     },
   }
 );
+
+type TextVariantProps = VariantProps<typeof textVariants>;
+
+type TextVariant = NonNullable<TextVariantProps['variant']>;
+
+const ROLE: Partial<Record<TextVariant, Role>> = {
+  h1: 'heading',
+  h2: 'heading',
+  h3: 'heading',
+  h4: 'heading',
+  blockquote: Platform.select({ web: 'blockquote' as Role }),
+  code: Platform.select({ web: 'code' as Role }),
+};
+
+const ARIA_LEVEL: Partial<Record<TextVariant, string>> = {
+  h1: '1',
+  h2: '2',
+  h3: '3',
+  h4: '4',
+};
 
 const TextClassContext = React.createContext<string | undefined>(undefined);
 
@@ -53,7 +72,7 @@ function Text({
   variant = 'default',
   ...props
 }: React.ComponentProps<typeof RNText> &
-  VariantProps<typeof textVariants> & {
+  TextVariantProps & {
     ref?: React.RefObject<RNText>;
     asChild?: boolean;
   }) {
@@ -61,42 +80,12 @@ function Text({
   const Component = asChild ? Slot.Text : RNText;
   return (
     <Component
-      {...getSemanticProps(variant)}
       className={cn(textVariants({ variant }), textClass, className)}
+      role={variant ? ROLE[variant] : undefined}
+      aria-level={variant ? ARIA_LEVEL[variant] : undefined}
       {...props}
     />
   );
 }
 
 export { Text, TextClassContext };
-
-function getSemanticProps(variant: VariantProps<typeof textVariants>['variant']) {
-  switch (variant) {
-    case 'h1':
-      return {
-        role: 'heading',
-        'aria-level': '1',
-      } as const;
-    case 'h2':
-      return {
-        role: 'heading',
-        'aria-level': '2',
-      } as const;
-    case 'h3':
-      return {
-        role: 'heading',
-        'aria-level': '3',
-      } as const;
-    case 'h4':
-      return {
-        role: 'heading',
-        'aria-level': '4',
-      } as const;
-    case 'blockquote':
-      return Platform.select({ web: { role: 'blockquote' as Role } });
-    case 'code':
-      return Platform.select({ web: { role: 'code' as Role } });
-    default:
-      return {};
-  }
-}

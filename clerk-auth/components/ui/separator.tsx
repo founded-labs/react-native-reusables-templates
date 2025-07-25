@@ -10,14 +10,14 @@ function Separator({
   decorative = true,
   ...props
 }: SeparatorPrimitive.RootProps & {
-  ref?: React.RefObject<SeparatorPrimitive.RootRef>;
+  ref?: React.RefObject<null | SeparatorPrimitive.RootRef>;
 }) {
   return (
     <SeparatorPrimitive.Root
       decorative={decorative}
       orientation={orientation}
       className={cn(
-        'bg-border shrink-0',
+        'shrink-0 bg-border',
         orientation === 'horizontal' ? 'h-[1px] w-full' : 'h-full w-[1px]',
         className
       )}

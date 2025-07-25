@@ -14,7 +14,7 @@ function Label({
   disabled,
   ...props
 }: LabelPrimitive.TextProps & {
-  ref?: React.RefObject<LabelPrimitive.TextRef>;
+  ref?: React.RefObject<null | LabelPrimitive.TextRef>;
 }) {
   return (
     <LabelPrimitive.Root
@@ -31,7 +31,7 @@ function Label({
       onPressOut={onPressOut}
       disabled={disabled}>
       <LabelPrimitive.Text
-        className={cn('text-foreground text-sm font-medium leading-none', className)}
+        className={cn('text-sm font-medium leading-none text-foreground', className)}
         {...props}
       />
     </LabelPrimitive.Root>

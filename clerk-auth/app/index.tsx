@@ -1,8 +1,9 @@
 import { Button } from '@/components/ui/button';
 import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
+import { useUser } from '@clerk/clerk-expo';
 import { Link, Stack } from 'expo-router';
-import { MoonStarIcon, StarIcon, SunIcon } from 'lucide-react-native';
+import { MoonStarIcon, PlusIcon, SunIcon } from 'lucide-react-native';
 import { useColorScheme } from 'nativewind';
 import * as React from 'react';
 import { Image, View } from 'react-native';
@@ -12,37 +13,50 @@ const LOGO = {
   dark: require('@/assets/images/react-native-reusables-dark.png'),
 };
 
+const CLERK_LOGO = {
+  light: require('@/assets/images/clerk-logo-light.png'),
+  dark: require('@/assets/images/clerk-logo-dark.png'),
+};
+
 const SCREEN_OPTIONS = {
-  title: 'React Native Reusables',
+  title: '',
   headerTransparent: true,
-  headerShadowVisible: true,
-  headerRight: () => <ThemeToggle />,
+  headerLeft: () => <ThemeToggle />,
 };
 
 export default function Screen() {
   const { colorScheme } = useColorScheme();
+  const { user } = useUser();
 
   return (
     <>
       <Stack.Screen options={SCREEN_OPTIONS} />
       <View className="flex-1 items-center justify-center gap-8 p-4">
-        <Image source={LOGO[colorScheme ?? 'light']} height={85} width={96} />
-        <View className="gap-2 p-4">
-          <Text className="font-mono text-sm">
-            1. Edit <Text variant="code">app/index.tsx</Text> to get started.
-          </Text>
-          <Text className="font-mono text-sm">2. Save to see your changes instantly.</Text>
+        <View className="flex-row items-center justify-center gap-3.5">
+          <Image
+            source={CLERK_LOGO[colorScheme ?? 'light']}
+            resizeMode="contain"
+            style={{ height: 36, width: 40 }}
+          />
+          <Icon as={PlusIcon} className="mr-1 size-5" />
+          <Image
+            source={LOGO[colorScheme ?? 'light']}
+            style={{ height: 36, width: 40 }}
+            resizeMode="contain"
+          />
         </View>
-        <View className="flex-row gap-2">
-          <Link href="https://reactnativereusables.com" asChild>
+        <View className="max-w-sm gap-2 px-4">
+          <Text variant="h1" className="text-3xl font-medium">
+            Make it yours{user?.firstName ? `, ${user.firstName}` : ''}.
+          </Text>
+          <Text className="ios:text-foreground text-center font-mono text-sm text-muted-foreground">
+            Update the screens and components to match your design and logic.
+          </Text>
+        </View>
+        <View className="gap-2">
+          <Link href="https://go.clerk.com/8e6CCee" asChild>
             <Button>
-              <Text>Browse the Docs</Text>
-            </Button>
-          </Link>
-          <Link href="https://github.com/founded-labs/react-native-reusables" asChild>
-            <Button variant="ghost">
-              <Text>Star the Repo</Text>
-              <Icon as={StarIcon} />
+              <Text>Explore Clerk Docs</Text>
             </Button>
           </Link>
         </View>
@@ -61,10 +75,10 @@ function ThemeToggle() {
 
   return (
     <Button
-      onPress={toggleColorScheme}
+      onPressIn={toggleColorScheme}
       size="icon"
       variant="ghost"
-      className="rounded-full web:mr-4">
+      className="rounded-full web:mx-4">
       <Icon as={THEME_ICONS[colorScheme ?? 'light']} className="size-5" />
     </Button>
   );

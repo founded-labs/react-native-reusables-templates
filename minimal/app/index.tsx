@@ -14,6 +14,8 @@ const LOGO = {
 
 const SCREEN_OPTIONS = {
   title: 'React Native Reusables',
+  headerTransparent: true,
+  headerShadowVisible: true,
   headerRight: () => <ThemeToggle />,
 };
 
@@ -23,7 +25,7 @@ export default function Screen() {
   return (
     <>
       <Stack.Screen options={SCREEN_OPTIONS} />
-      <View className="mb-safe flex-1 items-center justify-center gap-8 p-4">
+      <View className="flex-1 items-center justify-center gap-8 p-4">
         <Image source={LOGO[colorScheme ?? 'light']} height={85} width={96} />
         <View className="gap-2 p-4">
           <Text className="font-mono text-sm">

@@ -12,7 +12,9 @@
   "dependencies": {
     "@clerk/clerk-expo": "^2.14.11",
     "@react-navigation/native": "^7.0.0",
+    "@rn-primitives/avatar": "^1.2.0",
     "@rn-primitives/label": "^1.2.0",
+    "@rn-primitives/popover": "^1.2.0",
     "@rn-primitives/portal": "~1.3.0",
     "@rn-primitives/separator": "^1.2.0",
     "@rn-primitives/slot": "^1.2.0",

@@ -60,32 +60,10 @@ function Routes() {
     <Stack>
       {/* Screens only shown when the user is NOT signed in */}
       <Stack.Protected guard={!isSignedIn}>
-        <Stack.Screen name="(auth)/sign-in" options={{ headerShown: false, title: 'Sign in' }} />
-        <Stack.Screen
-          name="(auth)/sign-up"
-          options={{
-            presentation: 'modal',
-            title: '',
-            headerTransparent: true,
-            gestureEnabled: false,
-          }}
-        />
-        <Stack.Screen
-          name="(auth)/reset-password"
-          options={{
-            title: '',
-            headerShadowVisible: false,
-            headerTransparent: true,
-          }}
-        />
-        <Stack.Screen
-          name="(auth)/forgot-password"
-          options={{
-            title: '',
-            headerShadowVisible: false,
-            headerTransparent: true,
-          }}
-        />
+        <Stack.Screen name="(auth)/sign-in" options={SIGN_IN_SCREEN_OPTIONS} />
+        <Stack.Screen name="(auth)/sign-up" options={SIGN_UP_SCREEN_OPTIONS} />
+        <Stack.Screen name="(auth)/reset-password" options={DEFAULT_AUTH_SCREEN_OPTIONS} />
+        <Stack.Screen name="(auth)/forgot-password" options={DEFAULT_AUTH_SCREEN_OPTIONS} />
       </Stack.Protected>
 
       {/* Screens only shown when the user IS signed in */}
@@ -97,3 +75,21 @@ function Routes() {
     </Stack>
   );
 }
+
+const SIGN_IN_SCREEN_OPTIONS = {
+  headerShown: false,
+  title: 'Sign in',
+};
+
+const SIGN_UP_SCREEN_OPTIONS = {
+  presentation: 'modal',
+  title: '',
+  headerTransparent: true,
+  gestureEnabled: false,
+} as const;
+
+const DEFAULT_AUTH_SCREEN_OPTIONS = {
+  title: '',
+  headerShadowVisible: false,
+  headerTransparent: true,
+};

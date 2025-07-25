@@ -91,7 +91,7 @@ export function SignInForm() {
                 <Label htmlFor="password">Password</Label>
                 <Link asChild href={`/(auth)/forgot-password?email=${email}`}>
                   <Button variant="link" size="sm" className="ml-auto h-4 px-1 py-0 web:h-fit">
-                    <Text className="font-normal leading-none">Forgot your password?</Text>
+                    <Text className="font-normal leading-4">Forgot your password?</Text>
                   </Button>
                 </Link>
               </View>

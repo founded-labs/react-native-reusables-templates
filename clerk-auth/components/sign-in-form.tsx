@@ -41,6 +41,7 @@ export function SignInForm() {
         console.error(JSON.stringify(signInAttempt, null, 2));
       }
     } catch (err) {
+      // See https://dub.sh/xCzRrFQ for more info on error handling
       if (err instanceof Error) {
         const isEmailMessage =
           err.message.toLowerCase().includes('identifier') ||
@@ -48,8 +49,6 @@ export function SignInForm() {
         setError(isEmailMessage ? { email: err.message } : { password: err.message });
         return;
       }
-      // See https://clerk.com/docs/custom-flows/error-handling
-      // for more info on error handling
       console.error(JSON.stringify(err, null, 2));
     }
   }

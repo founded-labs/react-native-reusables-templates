@@ -64,8 +64,7 @@ export function SocialConnectionButtons() {
           // to handle next steps
         }
       } catch (err) {
-        // See https://clerk.com/docs/custom-flows/error-handling
-        // for more info on error handling
+        // See https://dub.sh/xCzRrFQ for more info on error handling
         console.error(JSON.stringify(err, null, 2));
       }
     };

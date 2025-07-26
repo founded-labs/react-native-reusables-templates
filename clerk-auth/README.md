@@ -1,48 +1,51 @@
-# Clerk Authentication Template
+# Clerk Auth Template
 
-> TODO
-
-> Add .env instructions
-
-This is a [React Native](https://reactnative.dev/) project built with [Expo](https://expo.dev/) and [React Native Reusables](https://github.com/founded-labs/react-native-reusables).
+This is a [React Native](https://reactnative.dev) project built with [Expo](https://expo.dev), [Clerk](https://dub.sh/4VMboi9), and [React Native Reusables](https://www.reactnativereusables.com).
 
 ## Getting Started
 
-To run the development server:
+Before running the app, make sure to:
+
+1. [Set up your Clerk account](https://dub.sh/YETwwe7)
+2. In the instance setup, leave the default option selected: **Email, phone, username**
+3. Enable Apple, GitHub, and Google as sign-in options under SSO Connections
+4. Rename `.env.example` to `.env` and paste your Expo Clerk API key from [your API keys](https://dub.sh/0cdWPsP)
+
+Then start the development server:
 
 ```bash
-    npm run start
-    # or
-    yarn start
-    # or
-    pnpm start
-    # or
-    bun start
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-This will start the Expo Dev Server. Open the app in:
+This will launch the Expo Go Server. You can open the app with:
 
-- **iOS**: press `i` to launch in the iOS simulator _(Mac only)_
+- **iOS**: press `i` to launch in the iOS simulator (Mac only)
 - **Android**: press `a` to launch in the Android emulator
 - **Web**: press `w` to run in a browser
 
-You can also scan the QR code using the [Expo Go](https://expo.dev/go) app on your device. This project fully supports running in Expo Go for quick testing on physical devices.
+Or scan the QR code with the [Expo Go](https://expo.dev/go) app to test on your device.
 
-## Adding components
+## Included Screens and Features
 
-You can add more reusable components using the CLI:
-
-```bash
-npx react-native-reusables/cli@latest add [...components]
-```
-
-> e.g. `npx react-native-reusables/cli@latest add input textarea`
-
-If you don't specify any component names, you'll be prompted to select which components to add interactively. Use the `--all` flag to install all available components at once.
+- Protected routes using Clerk authentication
+- Sign in screen
+- OAuth with Apple, GitHub, and Google
+- Forgot password screen
+- Reset password screen
+- Verify email screen
+- User profile button
+- Sign out screen
 
 ## Project Features
 
 - ⚛️ Built with [Expo Router](https://expo.dev/router)
+- 🔐 Authentication powered by [Clerk](https://dub.sh/sE9y0lH)
 - 🎨 Styled with [Tailwind CSS](https://tailwindcss.com/) via [Nativewind](https://www.nativewind.dev/)
 - 📦 UI powered by [React Native Reusables](https://github.com/founded-labs/react-native-reusables)
 - 🚀 New Architecture enabled
@@ -51,21 +54,12 @@ If you don't specify any component names, you'll be prompted to select which com
 
 ## Learn More
 
-To dive deeper into the technologies used:
-
+- [Clerk Docs](https://dub.sh/sE9y0lH)
 - [React Native Documentation](https://reactnative.dev/docs/getting-started)
 - [Expo Documentation](https://docs.expo.dev/)
 - [Nativewind Docs](https://www.nativewind.dev/)
 - [React Native Reusables](https://www.reactnativereusables.com)
 
-## Deploy with EAS
-
-The easiest way to deploy your app is with [Expo Application Services (EAS)](https://expo.dev/eas).
-
-- [EAS Build](https://docs.expo.dev/build/introduction/)
-- [EAS Updates](https://docs.expo.dev/eas-update/introduction/)
-- [EAS Submit](https://docs.expo.dev/submit/introduction/)
-
 ---
 
-If you enjoy using React Native Reusables, please consider giving it a ⭐ on [GitHub](https://github.com/founded-labs/react-native-reusables). Your support means a lot!
+If this template helps you move faster, consider giving [React Native Reusables](https://github.com/founded-labs/react-native-reusables) a ⭐ on GitHub. It helps a lot!

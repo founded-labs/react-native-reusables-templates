@@ -7,13 +7,13 @@ This is a [React Native](https://reactnative.dev/) project built with [Expo](htt
 To run the development server:
 
 ```bash
-    npm run start
+    npm run dev
     # or
-    yarn start
+    yarn dev
     # or
-    pnpm start
+    pnpm dev
     # or
-    bun start
+    bun dev
 ```
 
 This will start the Expo Dev Server. Open the app in:

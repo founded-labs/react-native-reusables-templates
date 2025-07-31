@@ -1,15 +1,15 @@
 # Clerk Auth Template
 
-This is a [React Native](https://reactnative.dev) project built with [Expo](https://expo.dev), [Clerk](https://dub.sh/4VMboi9), and [React Native Reusables](https://www.reactnativereusables.com).
+This is a [React Native](https://reactnative.dev) project built with [Expo](https://expo.dev), [Clerk](https://go.clerk.com/gjgxNgT), and [React Native Reusables](https://www.reactnativereusables.com).
 
 ## Getting Started
 
 Before running the app, make sure to:
 
-1. [Set up your Clerk account](https://dub.sh/YETwwe7)
+1. [Set up your Clerk account](https://go.clerk.com/blVsQlm)
 2. In the instance setup, leave the default option selected: **Email, phone, username**
 3. Enable Apple, GitHub, and Google as sign-in options under SSO Connections
-4. Rename `.env.example` to `.env` and paste your Expo Clerk API key from [your API keys](https://dub.sh/0cdWPsP)
+4. Rename `.env.example` to `.env.local` and paste your `EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY` from [your API keys](https://go.clerk.com/u8KAui7)
 
 Then start the development server:
 
@@ -45,7 +45,7 @@ Or scan the QR code with the [Expo Go](https://expo.dev/go) app to test on your 
 ## Project Features
 
 - ⚛️ Built with [Expo Router](https://expo.dev/router)
-- 🔐 Authentication powered by [Clerk](https://dub.sh/sE9y0lH)
+- 🔐 Authentication powered by [Clerk](https://go.clerk.com/Q1MKAz0)
 - 🎨 Styled with [Tailwind CSS](https://tailwindcss.com/) via [Nativewind](https://www.nativewind.dev/)
 - 📦 UI powered by [React Native Reusables](https://github.com/founded-labs/react-native-reusables)
 - 🚀 New Architecture enabled
@@ -54,7 +54,7 @@ Or scan the QR code with the [Expo Go](https://expo.dev/go) app to test on your 
 
 ## Learn More
 
-- [Clerk Docs](https://dub.sh/sE9y0lH)
+- [Clerk Docs](https://go.clerk.com/Q1MKAz0)
 - [React Native Documentation](https://reactnative.dev/docs/getting-started)
 - [Expo Documentation](https://docs.expo.dev/)
 - [Nativewind Docs](https://www.nativewind.dev/)

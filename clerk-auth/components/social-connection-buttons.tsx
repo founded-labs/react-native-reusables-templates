@@ -64,7 +64,7 @@ export function SocialConnectionButtons() {
           // to handle next steps
         }
       } catch (err) {
-        // See https://dub.sh/xCzRrFQ for more info on error handling
+        // See https://go.clerk.com/mRUDrIe for more info on error handling
         console.error(JSON.stringify(err, null, 2));
       }
     };

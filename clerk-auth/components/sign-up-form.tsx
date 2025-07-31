@@ -33,7 +33,7 @@ export function SignUpForm() {
       // Navigate to verify email screen to capture OTP code
       router.push(`/(auth)/sign-up/verify-email?email=${email}`);
     } catch (err) {
-      // See https://dub.sh/xCzRrFQ for more info on error handling
+      // See https://go.clerk.com/mRUDrIe for more info on error handling
       if (err instanceof Error) {
         const isEmailMessage =
           err.message.toLowerCase().includes('identifier') ||

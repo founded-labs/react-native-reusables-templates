@@ -1,8 +1,5 @@
-'use client';
-
 import { cn } from '@/lib/utils';
 import * as LabelPrimitive from '@rn-primitives/label';
-import * as React from 'react';
 import { Platform } from 'react-native';
 
 function Label({
@@ -13,9 +10,7 @@ function Label({
   onPressOut,
   disabled,
   ...props
-}: LabelPrimitive.TextProps & {
-  ref?: React.RefObject<LabelPrimitive.TextRef | null>;
-}) {
+}: LabelPrimitive.TextProps & React.RefAttributes<LabelPrimitive.TextRef>) {
   return (
     <LabelPrimitive.Root
       className={cn(
@@ -31,7 +26,11 @@ function Label({
       onPressOut={onPressOut}
       disabled={disabled}>
       <LabelPrimitive.Text
-        className={cn('text-sm font-medium leading-none text-foreground', className)}
+        className={cn(
+          'text-sm font-medium text-foreground',
+          Platform.select({ web: 'leading-none' }),
+          className
+        )}
         {...props}
       />
     </LabelPrimitive.Root>

@@ -1,3 +1,5 @@
+import { DarkTheme, DefaultTheme, type Theme } from '@react-navigation/native';
+
 export const THEME = {
   light: {
     background: 'hsl(0 0% 100%)',
@@ -18,7 +20,7 @@ export const THEME = {
     border: 'hsl(0 0% 89.8%)',
     input: 'hsl(0 0% 89.8%)',
     ring: 'hsl(0 0% 63%)',
-    radius: '0.5rem',
+    radius: '0.625rem',
     chart1: 'hsl(12 76% 61%)',
     chart2: 'hsl(173 58% 39%)',
     chart3: 'hsl(197 37% 24%)',
@@ -44,7 +46,7 @@ export const THEME = {
     border: 'hsl(0 0% 14.9%)',
     input: 'hsl(0 0% 14.9%)',
     ring: 'hsl(300 0% 45%)',
-    radius: '0.5rem',
+    radius: '0.625rem',
     chart1: 'hsl(220 70% 50%)',
     chart2: 'hsl(160 60% 45%)',
     chart3: 'hsl(30 80% 55%)',
@@ -53,21 +55,27 @@ export const THEME = {
   },
 };
 
-export const NAV_THEME = {
+export const NAV_THEME: Record<'light' | 'dark', Theme> = {
   light: {
-    background: THEME.light.background,
-    border: THEME.light.border,
-    card: THEME.light.card,
-    notification: THEME.light.destructive,
-    primary: THEME.light.primary,
-    text: THEME.light.foreground,
+    ...DefaultTheme,
+    colors: {
+      background: THEME.light.background,
+      border: THEME.light.border,
+      card: THEME.light.card,
+      notification: THEME.light.destructive,
+      primary: THEME.light.primary,
+      text: THEME.light.foreground,
+    },
   },
   dark: {
-    background: THEME.dark.background,
-    border: THEME.dark.border,
-    card: THEME.dark.card,
-    notification: THEME.dark.destructive,
-    primary: THEME.dark.primary,
-    text: THEME.dark.foreground,
+    ...DarkTheme,
+    colors: {
+      background: THEME.dark.background,
+      border: THEME.dark.border,
+      card: THEME.dark.card,
+      notification: THEME.dark.destructive,
+      primary: THEME.dark.primary,
+      text: THEME.dark.foreground,
+    },
   },
 };

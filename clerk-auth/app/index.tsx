@@ -4,7 +4,7 @@ import { Text } from '@/components/ui/text';
 import { UserButton } from '@/components/user-button';
 import { useUser } from '@clerk/clerk-expo';
 import { Link, Stack } from 'expo-router';
-import { MoonStarIcon, PlusIcon, SunIcon } from 'lucide-react-native';
+import { MoonStarIcon, XIcon, SunIcon } from 'lucide-react-native';
 import { useColorScheme } from 'nativewind';
 import * as React from 'react';
 import { Image, type ImageStyle, View } from 'react-native';
@@ -47,7 +47,7 @@ export default function Screen() {
             resizeMode="contain"
             style={LOGO_STYLE}
           />
-          <Icon as={PlusIcon} className="mr-1 size-5" />
+          <Icon as={XIcon} className="mr-1 size-5" />
           <Image source={LOGO[colorScheme ?? 'light']} style={LOGO_STYLE} resizeMode="contain" />
         </View>
         <View className="max-w-sm gap-2 px-4">

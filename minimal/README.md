@@ -1,6 +1,12 @@
 # Minimal Template
 
-This is a [React Native](https://reactnative.dev/) project built with [Expo](https://expo.dev/) and [React Native Reusables](https://github.com/founded-labs/react-native-reusables).
+This is a [React Native](https://reactnative.dev/) project built with [Expo](https://expo.dev/) and [React Native Reusables](https://reactnativereusables.com). 
+
+It was initialized using the following command:
+
+```bash
+npx react-native-reusables/cli@latest init -t minimal
+```
 
 ## Getting Started
 

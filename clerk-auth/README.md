@@ -1,6 +1,12 @@
 # Clerk Auth Template
 
-This is a [React Native](https://reactnative.dev) project built with [Expo](https://expo.dev), [Clerk](https://go.clerk.com/gjgxNgT), and [React Native Reusables](https://www.reactnativereusables.com).
+This is a [React Native](https://reactnative.dev) project built with [Expo](https://expo.dev), [Clerk](https://go.clerk.com/gjgxNgT), and [React Native Reusables](https://reactnativereusables.com).
+
+It was initialized using the following command:
+
+```bash
+npx react-native-reusables/cli@latest init -t clerk-auth
+```
 
 ## Getting Started
 

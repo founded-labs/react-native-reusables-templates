@@ -11,7 +11,7 @@ React Native Reusables is getting a major update planned for early August 2025. 
 
 # React Native Reusables Templates
 
-Templates for building universal apps with [React Native Reusables](https://www.reactnativereusables.com).
+Templates for building universal apps with [React Native Reusables](https://reactnativereusables.com).
 
 ## Getting Started
 

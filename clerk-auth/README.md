@@ -64,7 +64,7 @@ Or scan the QR code with the [Expo Go](https://expo.dev/go) app to test on your 
 - [React Native Documentation](https://reactnative.dev/docs/getting-started)
 - [Expo Documentation](https://docs.expo.dev/)
 - [Nativewind Docs](https://www.nativewind.dev/)
-- [React Native Reusables](https://www.reactnativereusables.com)
+- [React Native Reusables](https://reactnativereusables.com)
 
 ---
 

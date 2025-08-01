@@ -1,6 +1,6 @@
 # Minimal Template
 
-This is a [React Native](https://reactnative.dev/) project built with [Expo](https://expo.dev/) and [React Native Reusables](https://reactnativereusables.com). 
+This is a [React Native](https://reactnative.dev/) project built with [Expo](https://expo.dev/) and [React Native Reusables](https://reactnativereusables.com).
 
 It was initialized using the following command:
 
@@ -58,7 +58,7 @@ To dive deeper into the technologies used:
 - [React Native Documentation](https://reactnative.dev/docs/getting-started)
 - [Expo Documentation](https://docs.expo.dev/)
 - [Nativewind Docs](https://www.nativewind.dev/)
-- [React Native Reusables](https://www.reactnativereusables.com)
+- [React Native Reusables](https://reactnativereusables.com)
 
 ## Deploy with EAS
 

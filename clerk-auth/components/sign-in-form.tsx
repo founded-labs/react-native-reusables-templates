@@ -59,7 +59,7 @@ export function SignInForm() {
 
   return (
     <View className="gap-6">
-      <Card className="border-border/0 py-8 shadow-none sm:border-border sm:shadow-sm sm:shadow-black/5">
+      <Card className="border-border/0 shadow-none sm:border-border sm:shadow-sm sm:shadow-black/5">
         <CardHeader>
           <CardTitle className="text-center text-xl sm:text-left">Sign in to clerk-auth</CardTitle>
           <CardDescription className="text-center sm:text-left">

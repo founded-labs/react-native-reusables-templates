@@ -1,4 +1,4 @@
-import { SocialConnectionButtons } from '@/components/social-connection-buttons';
+import { SocialConnections } from '@/components/social-connections';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -30,7 +30,6 @@ export function SignUpForm() {
       // Send user an email with verification code
       await signUp.prepareEmailAddressVerification({ strategy: 'email_code' });
 
-      // Navigate to verify email screen to capture OTP code
       router.push(`/(auth)/sign-up/verify-email?email=${email}`);
     } catch (err) {
       // See https://go.clerk.com/mRUDrIe for more info on error handling
@@ -93,15 +92,13 @@ export function SignUpForm() {
                 <Text className="text-sm font-medium text-destructive">{error.password}</Text>
               ) : null}
             </View>
-            <View className="gap-3">
-              <Button className="w-full" onPress={onSubmit}>
-                <Text>Continue</Text>
-              </Button>
-            </View>
+            <Button className="w-full" onPress={onSubmit}>
+              <Text>Continue</Text>
+            </Button>
           </View>
           <Text className="text-center text-sm">
             Already have an account?{' '}
-            <Link href="/(auth)/sign-in" dismissTo className="underline underline-offset-4">
+            <Link href="/(auth)/sign-in" dismissTo className="text-sm underline underline-offset-4">
               Sign in
             </Link>
           </Text>
@@ -110,7 +107,7 @@ export function SignUpForm() {
             <Text className="px-4 text-sm text-muted-foreground">or</Text>
             <Separator className="flex-1" />
           </View>
-          <SocialConnectionButtons />
+          <SocialConnections />
         </CardContent>
       </Card>
     </View>

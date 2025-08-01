@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import { useSSO, type StartSSOFlowParams } from '@clerk/clerk-expo';
 import * as AuthSession from 'expo-auth-session';
 import { router } from 'expo-router';
@@ -36,7 +37,7 @@ const SOCIAL_CONNECTION_STRATEGIES: {
   },
 ];
 
-export function SocialConnectionButtons() {
+export function SocialConnections() {
   useWarmUpBrowser();
   const { colorScheme } = useColorScheme();
   const { startSSOFlow } = useSSO();
@@ -56,13 +57,14 @@ export function SocialConnectionButtons() {
         // If sign in was successful, set the active session
         if (createdSessionId && setActive) {
           setActive({ session: createdSessionId });
-          router.replace('/');
-        } else {
-          // If there is no `createdSessionId`,
-          // there are missing requirements, such as MFA
-          // Use the `signIn` or `signUp` returned from `startSSOFlow`
-          // to handle next steps
+          return;
         }
+
+        // TODO: Handle other statuses
+        // If there is no `createdSessionId`,
+        // there are missing requirements, such as MFA
+        // Use the `signIn` or `signUp` returned from `startSSOFlow`
+        // to handle next steps
       } catch (err) {
         // See https://go.clerk.com/mRUDrIe for more info on error handling
         console.error(JSON.stringify(err, null, 2));
@@ -81,10 +83,10 @@ export function SocialConnectionButtons() {
             className="sm:flex-1"
             onPress={onSocialLoginPress(strategy.type)}>
             <Image
-              className="size-4"
-              tintColor={
-                strategy.useTint ? (colorScheme === 'dark' ? 'white' : 'black') : undefined
-              }
+              className={cn('size-4', strategy.useTint && Platform.select({ web: 'dark:invert' }))}
+              tintColor={Platform.select({
+                native: strategy.useTint ? (colorScheme === 'dark' ? 'white' : 'black') : undefined,
+              })}
               source={strategy.source}
             />
           </Button>

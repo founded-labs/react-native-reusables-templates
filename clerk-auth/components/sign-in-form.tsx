@@ -1,4 +1,4 @@
-import { SocialConnectionButtons } from '@/components/social-connection-buttons';
+import { SocialConnections } from '@/components/social-connections';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -8,7 +8,7 @@ import { Text } from '@/components/ui/text';
 import { useSignIn } from '@clerk/clerk-expo';
 import { Link, router } from 'expo-router';
 import * as React from 'react';
-import { TextInput, View } from 'react-native';
+import { type TextInput, View } from 'react-native';
 
 export function SignInForm() {
   const { signIn, setActive, isLoaded } = useSignIn();
@@ -34,12 +34,10 @@ export function SignInForm() {
       if (signInAttempt.status === 'complete') {
         setError({ email: '', password: '' });
         await setActive({ session: signInAttempt.createdSessionId });
-        router.replace('/');
-      } else {
-        // If the status isn't complete, check why. User might need to
-        // complete further steps.
-        console.error(JSON.stringify(signInAttempt, null, 2));
+        return;
       }
+      // TODO: Handle other statuses
+      console.error(JSON.stringify(signInAttempt, null, 2));
     } catch (err) {
       // See https://go.clerk.com/mRUDrIe for more info on error handling
       if (err instanceof Error) {
@@ -89,7 +87,10 @@ export function SignInForm() {
               <View className="flex-row items-center">
                 <Label htmlFor="password">Password</Label>
                 <Link asChild href={`/(auth)/forgot-password?email=${email}`}>
-                  <Button variant="link" size="sm" className="ml-auto h-4 px-1 py-0 web:h-fit">
+                  <Button
+                    variant="link"
+                    size="sm"
+                    className="ml-auto h-4 px-1 py-0 web:h-fit sm:h-4">
                     <Text className="font-normal leading-4">Forgot your password?</Text>
                   </Button>
                 </Link>
@@ -106,15 +107,13 @@ export function SignInForm() {
                 <Text className="text-sm font-medium text-destructive">{error.password}</Text>
               ) : null}
             </View>
-            <View className="gap-3">
-              <Button className="w-full" onPress={onSubmit}>
-                <Text>Continue</Text>
-              </Button>
-            </View>
+            <Button className="w-full" onPress={onSubmit}>
+              <Text>Continue</Text>
+            </Button>
           </View>
           <Text className="text-center text-sm">
             Don&apos;t have an account?{' '}
-            <Link href="/(auth)/sign-up" className="underline underline-offset-4">
+            <Link href="/(auth)/sign-up" className="text-sm underline underline-offset-4">
               Sign up
             </Link>
           </Text>
@@ -123,7 +122,7 @@ export function SignInForm() {
             <Text className="px-4 text-sm text-muted-foreground">or</Text>
             <Separator className="flex-1" />
           </View>
-          <SocialConnectionButtons />
+          <SocialConnections />
         </CardContent>
       </Card>
     </View>

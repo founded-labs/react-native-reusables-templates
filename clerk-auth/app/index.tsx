@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
-import { UserButton } from '@/components/user-button';
+import { UserMenu } from '@/components/user-menu';
 import { useUser } from '@clerk/clerk-expo';
 import { Link, Stack } from 'expo-router';
 import { MoonStarIcon, XIcon, SunIcon } from 'lucide-react-native';
@@ -28,7 +28,7 @@ const SCREEN_OPTIONS = {
   header: () => (
     <View className="top-safe absolute left-0 right-0 flex-row justify-between px-4 py-2 web:mx-2">
       <ThemeToggle />
-      <UserButton />
+      <UserMenu />
     </View>
   ),
 };

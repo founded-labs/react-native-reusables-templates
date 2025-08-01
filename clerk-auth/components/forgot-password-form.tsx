@@ -32,6 +32,7 @@ export function ForgotPasswordForm() {
 
       router.push(`/(auth)/reset-password?email=${email}`);
     } catch (err) {
+      // See https://go.clerk.com/mRUDrIe for more info on error handling
       if (err instanceof Error) {
         setError({ email: err.message });
         return;
@@ -68,11 +69,9 @@ export function ForgotPasswordForm() {
                 <Text className="text-sm font-medium text-destructive">{error.email}</Text>
               ) : null}
             </View>
-            <View className="gap-3">
-              <Button className="w-full" onPress={onSubmit}>
-                <Text>Reset your password</Text>
-              </Button>
-            </View>
+            <Button className="w-full" onPress={onSubmit}>
+              <Text>Reset your password</Text>
+            </Button>
           </View>
         </CardContent>
       </Card>

@@ -17,7 +17,7 @@ export function VerifyEmailForm() {
   const { email = '' } = useLocalSearchParams<{ email?: string }>();
   const [code, setCode] = React.useState('');
   const [error, setError] = React.useState('');
-  const countdown = useCountdown(RESEND_CODE_INTERVAL_SECONDS);
+  const { countdown, restartCountdown } = useCountdown(RESEND_CODE_INTERVAL_SECONDS);
 
   async function onSubmit() {
     if (!isLoaded) return;
@@ -32,13 +32,30 @@ export function VerifyEmailForm() {
       // and redirect the user
       if (signUpAttempt.status === 'complete') {
         await setActive({ session: signUpAttempt.createdSessionId });
-        router.replace('/');
-      } else {
-        // If the status is not complete, check why. User may need to
-        // complete further steps.
-        console.error(JSON.stringify(signUpAttempt, null, 2));
+        return;
       }
+      // TODO: Handle other statuses
+      // If the status is not complete, check why. User may need to
+      // complete further steps.
+      console.error(JSON.stringify(signUpAttempt, null, 2));
     } catch (err) {
+      // See https://go.clerk.com/mRUDrIe for more info on error handling
+      if (err instanceof Error) {
+        setError(err.message);
+        return;
+      }
+      console.error(JSON.stringify(err, null, 2));
+    }
+  }
+
+  async function onResendCode() {
+    if (!isLoaded) return;
+
+    try {
+      await signUp.prepareEmailAddressVerification({ strategy: 'email_code' });
+      restartCountdown();
+    } catch (err) {
+      // See https://go.clerk.com/mRUDrIe for more info on error handling
       if (err instanceof Error) {
         setError(err.message);
         return;
@@ -73,7 +90,7 @@ export function VerifyEmailForm() {
               {!error ? null : (
                 <Text className="text-sm font-medium text-destructive">{error}</Text>
               )}
-              <Button variant="link" size="sm" disabled={countdown > 0}>
+              <Button variant="link" size="sm" disabled={countdown > 0} onPress={onResendCode}>
                 <Text className="text-center text-xs">
                   Didn&apos;t receive the code? Resend{' '}
                   {countdown > 0 ? (
@@ -101,21 +118,38 @@ export function VerifyEmailForm() {
 
 function useCountdown(seconds = 30) {
   const [countdown, setCountdown] = React.useState(seconds);
+  const intervalRef = React.useRef<ReturnType<typeof setInterval> | null>(null);
 
-  React.useEffect(() => {
-    const interval = setInterval(() => {
+  const startCountdown = React.useCallback(() => {
+    setCountdown(seconds);
+
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+
+    intervalRef.current = setInterval(() => {
       setCountdown((prev) => {
         if (prev <= 1) {
-          clearInterval(interval);
+          if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+            intervalRef.current = null;
+          }
+          return 0;
         }
         return prev - 1;
       });
     }, 1000);
+  }, [seconds]);
+
+  React.useEffect(() => {
+    startCountdown();
 
     return () => {
-      clearInterval(interval);
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
     };
-  }, []);
+  }, [startCountdown]);
 
-  return countdown;
+  return { countdown, restartCountdown: startCountdown };
 }

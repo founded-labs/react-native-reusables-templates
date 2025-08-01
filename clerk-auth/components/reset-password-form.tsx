@@ -25,18 +25,16 @@ export function ResetPasswordForm() {
         code,
         password,
       });
-      // Check if 2FA is required
-      if (result.status === 'needs_second_factor') {
-        // handle 2FA
-      } else if (result.status === 'complete') {
+
+      if (result.status === 'complete') {
         // Set the active session to
         // the newly created session (user is now signed in)
         setActive({ session: result.createdSessionId });
-        router.replace('/');
-      } else {
-        console.log(result);
+        return;
       }
+      // TODO: Handle other statuses
     } catch (err) {
+      // See https://go.clerk.com/mRUDrIe for more info on error handling
       if (err instanceof Error) {
         const isPasswordMessage = err.message.toLowerCase().includes('password');
         setError({ code: '', password: isPasswordMessage ? err.message : '' });
@@ -93,11 +91,9 @@ export function ResetPasswordForm() {
                 <Text className="text-sm font-medium text-destructive">{error.code}</Text>
               ) : null}
             </View>
-            <View className="gap-3">
-              <Button className="w-full" onPress={onSubmit}>
-                <Text>Reset Password</Text>
-              </Button>
-            </View>
+            <Button className="w-full" onPress={onSubmit}>
+              <Text>Reset Password</Text>
+            </Button>
           </View>
         </CardContent>
       </Card>

@@ -61,8 +61,8 @@ Or scan the QR code with the [Expo Go](https://expo.dev/go) app to test on your 
 ## Learn More
 
 - [Clerk Docs](https://go.clerk.com/Q1MKAz0)
-- [React Native Documentation](https://reactnative.dev/docs/getting-started)
-- [Expo Documentation](https://docs.expo.dev/)
+- [React Native Docs](https://reactnative.dev/docs/getting-started)
+- [Expo Docs](https://docs.expo.dev/)
 - [Nativewind Docs](https://www.nativewind.dev/)
 - [React Native Reusables](https://reactnativereusables.com)
 

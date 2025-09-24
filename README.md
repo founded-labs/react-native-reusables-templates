@@ -7,7 +7,7 @@ Templates for building universal apps with [React Native Reusables](https://reac
 To start a new project with a template:
 
 ```bash
-npx react-native-reusables/cli@latest init [options]
+npx @react-native-reusables/cli@latest init [options]
 ```
 
 ### Options

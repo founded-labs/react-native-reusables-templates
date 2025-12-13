@@ -23,6 +23,7 @@ If no template is specified, you’ll be prompted to select one interactively.
 ### Templates
 
 - [`minimal`](/minimal/)
+- [`minimal-uniwind`](/minimal-uniwind/)
 - [`clerk-auth`](/clerk-auth/)
 
 ## License

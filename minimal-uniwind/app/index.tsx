@@ -3,9 +3,9 @@ import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import { Link, Stack } from 'expo-router';
 import { MoonStarIcon, StarIcon, SunIcon } from 'lucide-react-native';
-import { Uniwind, useUniwind } from 'uniwind';
 import * as React from 'react';
 import { Image, type ImageStyle, View } from 'react-native';
+import { Uniwind, useUniwind } from 'uniwind';
 
 const LOGO = {
   light: require('@/assets/images/react-native-reusables-light.png'),
@@ -32,10 +32,10 @@ export default function Screen() {
       <View className="flex-1 items-center justify-center gap-8 p-4">
         <Image source={LOGO[theme ?? 'light']} style={IMAGE_STYLE} resizeMode="contain" />
         <View className="gap-2 p-4">
-          <Text className="ios:text-foreground font-mono text-sm text-muted-foreground">
+          <Text className="ios:text-foreground text-muted-foreground font-mono text-sm">
             1. Edit <Text variant="code">app/index.tsx</Text> to get started.
           </Text>
-          <Text className="ios:text-foreground font-mono text-sm text-muted-foreground">
+          <Text className="ios:text-foreground text-muted-foreground font-mono text-sm">
             2. Save to see your changes instantly.
           </Text>
         </View>
@@ -75,7 +75,7 @@ function ThemeToggle() {
       onPressIn={toggleTheme}
       size="icon"
       variant="ghost"
-      className="ios:size-9 rounded-full web:mx-4">
+      className="ios:size-9 web:mx-4 rounded-full">
       <Icon as={THEME_ICONS[theme ?? 'light']} className="size-5" />
     </Button>
   );

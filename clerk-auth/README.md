@@ -2,10 +2,10 @@
 
 This is a [React Native](https://reactnative.dev) project built with [Expo](https://expo.dev), [Clerk](https://go.clerk.com/gjgxNgT), and [React Native Reusables](https://reactnativereusables.com).
 
-It was initialized using the following command:
+It was initialized using the following command, then the `Clerk auth (Nativewind)` template was selected when prompted:
 
 ```bash
-npx @react-native-reusables/cli@latest init -t clerk-auth
+npx @react-native-reusables/cli@latest init
 ```
 
 ## Getting Started

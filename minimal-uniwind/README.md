@@ -2,10 +2,10 @@
 
 This is a [React Native](https://reactnative.dev/) project built with [Expo](https://expo.dev/) and [React Native Reusables](https://reactnativereusables.com).
 
-It was initialized using the following command:
+It was initialized using the following command, then the `Minimal (Uniwind)` template was selected when prompted:
 
 ```bash
-npx @react-native-reusables/cli@latest init -t minimal-uniwind
+npx @react-native-reusables/cli@latest init
 ```
 
 ## Getting Started

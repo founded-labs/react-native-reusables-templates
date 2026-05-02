@@ -3,44 +3,60 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Text } from '@/components/ui/text';
-import { useSignIn } from '@clerk/clerk-expo';
-import { router } from 'expo-router';
+import { cn } from '@/lib/utils';
+import { useSignIn } from '@clerk/expo';
 import * as React from 'react';
 import { TextInput, View } from 'react-native';
 
 export function ResetPasswordForm() {
-  const { signIn, setActive, isLoaded } = useSignIn();
+  const { signIn, fetchStatus } = useSignIn();
   const [password, setPassword] = React.useState('');
   const [code, setCode] = React.useState('');
   const codeInputRef = React.useRef<TextInput>(null);
   const [error, setError] = React.useState({ code: '', password: '' });
 
   async function onSubmit() {
-    if (!isLoaded) {
+    if (fetchStatus === 'fetching') {
       return;
     }
     try {
-      const result = await signIn?.attemptFirstFactor({
-        strategy: 'reset_password_email_code',
+      const { error: verifyCodeError } = await signIn.resetPasswordEmailCode.verifyCode({
         code,
+      });
+
+      if (verifyCodeError) {
+        setError({ code: verifyCodeError.longMessage ?? verifyCodeError.message, password: '' });
+        return;
+      }
+
+      const { error: submitPasswordError } = await signIn.resetPasswordEmailCode.submitPassword({
         password,
       });
 
-      if (result.status === 'complete') {
+      if (submitPasswordError) {
+        setError({
+          code: '',
+          password: submitPasswordError.longMessage ?? submitPasswordError.message,
+        });
+        return;
+      }
+
+      if (signIn.status === 'complete') {
         // Set the active session to
         // the newly created session (user is now signed in)
-        setActive({ session: result.createdSessionId });
+        await signIn.finalize();
         return;
       }
       // TODO: Handle other statuses
     } catch (err) {
       // See https://go.clerk.com/mRUDrIe for more info on error handling
-      if (err instanceof Error) {
-        const isPasswordMessage = err.message.toLowerCase().includes('password');
-        setError({ code: '', password: isPasswordMessage ? err.message : '' });
-        return;
-      }
-      console.error(JSON.stringify(err, null, 2));
+      const message = err instanceof Error ? err.message : 'Something went wrong';
+      const isPasswordMessage = message.toLowerCase().includes('password');
+      setError({
+        code: isPasswordMessage ? '' : message,
+        password: isPasswordMessage ? message : '',
+      });
+      console.error(err);
     }
   }
 
@@ -91,7 +107,7 @@ export function ResetPasswordForm() {
                 <Text className="text-sm font-medium text-destructive">{error.code}</Text>
               ) : null}
             </View>
-            <Button className="w-full" onPress={onSubmit}>
+            <Button className={cn("w-full", fetchStatus === 'fetching' && 'opacity-50')} onPress={onSubmit}>
               <Text>Reset Password</Text>
             </Button>
           </View>

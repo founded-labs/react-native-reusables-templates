@@ -5,42 +5,52 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Text } from '@/components/ui/text';
-import { useSignUp } from '@clerk/clerk-expo';
+import { cn } from '@/lib/utils';
+import { useSignUp } from '@clerk/expo';
 import { Link, router } from 'expo-router';
 import * as React from 'react';
 import { TextInput, View } from 'react-native';
 
 export function SignUpForm() {
-  const { signUp, isLoaded } = useSignUp();
+  const { signUp, fetchStatus } = useSignUp();
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const passwordInputRef = React.useRef<TextInput>(null);
   const [error, setError] = React.useState<{ email?: string; password?: string }>({});
 
   async function onSubmit() {
-    if (!isLoaded) return;
+    if (fetchStatus === 'fetching') return;
 
     // Start sign-up process using email and password provided
     try {
-      await signUp.create({
+      const { error: createError } = await signUp.password({
         emailAddress: email,
         password,
       });
 
+      if (createError) {
+        const message = createError.longMessage ?? createError.message;
+        const isEmailMessage =
+          message.toLowerCase().includes('identifier') || message.toLowerCase().includes('email');
+        setError(isEmailMessage ? { email: message } : { password: message });
+        return;
+      }
+
       // Send user an email with verification code
-      await signUp.prepareEmailAddressVerification({ strategy: 'email_code' });
+      const { error: sendCodeError } = await signUp.verifications.sendEmailCode();
+
+      if (sendCodeError) {
+        setError({ email: sendCodeError.longMessage ?? sendCodeError.message });
+        return;
+      }
 
       router.push(`/(auth)/sign-up/verify-email?email=${email}`);
     } catch (err) {
       // See https://go.clerk.com/mRUDrIe for more info on error handling
-      if (err instanceof Error) {
-        const isEmailMessage =
-          err.message.toLowerCase().includes('identifier') ||
-          err.message.toLowerCase().includes('email');
-        setError(isEmailMessage ? { email: err.message } : { password: err.message });
-        return;
-      }
-      console.error(JSON.stringify(err, null, 2));
+      const message = err instanceof Error ? err.message : 'Something went wrong';
+      const isEmailMessage =
+        message.toLowerCase().includes('identifier') || message.toLowerCase().includes('email');
+      setError(isEmailMessage ? { email: message } : { password: message });
     }
   }
 
@@ -92,7 +102,7 @@ export function SignUpForm() {
                 <Text className="text-sm font-medium text-destructive">{error.password}</Text>
               ) : null}
             </View>
-            <Button className="w-full" onPress={onSubmit}>
+            <Button className={cn("w-full", fetchStatus === 'fetching' && 'opacity-50')} onPress={onSubmit}>
               <Text>Continue</Text>
             </Button>
           </View>

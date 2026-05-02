@@ -1,8 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { useSSO, type StartSSOFlowParams } from '@clerk/clerk-expo';
+import { useSSO, type StartSSOFlowParams } from '@clerk/expo';
 import * as AuthSession from 'expo-auth-session';
-import { router } from 'expo-router';
 import * as WebBrowser from 'expo-web-browser';
 import { useColorScheme } from 'nativewind';
 import * as React from 'react';
@@ -20,22 +19,22 @@ const SOCIAL_CONNECTION_STRATEGIES: {
   source: ImageSourcePropType;
   useTint?: boolean;
 }[] = [
-  {
-    type: 'oauth_apple',
-    source: { uri: 'https://img.clerk.com/static/apple.png?width=160' },
-    useTint: true,
-  },
-  {
-    type: 'oauth_google',
-    source: { uri: 'https://img.clerk.com/static/google.png?width=160' },
-    useTint: false,
-  },
-  {
-    type: 'oauth_github',
-    source: { uri: 'https://img.clerk.com/static/github.png?width=160' },
-    useTint: true,
-  },
-];
+    {
+      type: 'oauth_apple',
+      source: { uri: 'https://img.clerk.com/static/apple.png?width=160' },
+      useTint: true,
+    },
+    {
+      type: 'oauth_google',
+      source: { uri: 'https://img.clerk.com/static/google.png?width=160' },
+      useTint: false,
+    },
+    {
+      type: 'oauth_github',
+      source: { uri: 'https://img.clerk.com/static/github.png?width=160' },
+      useTint: true,
+    },
+  ];
 
 export function SocialConnections() {
   useWarmUpBrowser();
@@ -97,7 +96,7 @@ export function SocialConnections() {
 }
 
 const useWarmUpBrowser = Platform.select({
-  web: () => {},
+  web: () => { },
   default: () => {
     React.useEffect(() => {
       // Preloads the browser for Android devices to reduce authentication load time

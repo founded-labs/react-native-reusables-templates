@@ -3,7 +3,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Text } from '@/components/ui/text';
-import { useSignIn } from '@clerk/clerk-expo';
+import { cn } from '@/lib/utils';
+import { useSignIn } from '@clerk/expo';
 import { router } from 'expo-router';
 import { useLocalSearchParams } from 'expo-router/build/hooks';
 import * as React from 'react';
@@ -12,7 +13,7 @@ import { View } from 'react-native';
 export function ForgotPasswordForm() {
   const { email: emailParam = '' } = useLocalSearchParams<{ email?: string }>();
   const [email, setEmail] = React.useState(emailParam);
-  const { signIn, isLoaded } = useSignIn();
+  const { signIn, fetchStatus } = useSignIn();
   const [error, setError] = React.useState<{ email?: string; password?: string }>({});
 
   const onSubmit = async () => {
@@ -20,24 +21,31 @@ export function ForgotPasswordForm() {
       setError({ email: 'Email is required' });
       return;
     }
-    if (!isLoaded) {
+    if (fetchStatus === 'fetching') {
       return;
     }
 
     try {
-      await signIn.create({
-        strategy: 'reset_password_email_code',
+      const { error: createError } = await signIn.create({
         identifier: email,
       });
+
+      if (createError) {
+        setError({ email: createError.longMessage ?? createError.message });
+        return;
+      }
+
+      const { error: sendCodeError } = await signIn.resetPasswordEmailCode.sendCode();
+
+      if (sendCodeError) {
+        setError({ email: sendCodeError.longMessage ?? sendCodeError.message });
+        return;
+      }
 
       router.push(`/(auth)/reset-password?email=${email}`);
     } catch (err) {
       // See https://go.clerk.com/mRUDrIe for more info on error handling
-      if (err instanceof Error) {
-        setError({ email: err.message });
-        return;
-      }
-      console.error(JSON.stringify(err, null, 2));
+      setError({ email: err instanceof Error ? err.message : 'Something went wrong' });
     }
   };
 
@@ -69,7 +77,7 @@ export function ForgotPasswordForm() {
                 <Text className="text-sm font-medium text-destructive">{error.email}</Text>
               ) : null}
             </View>
-            <Button className="w-full" onPress={onSubmit}>
+            <Button className={cn("w-full", fetchStatus === 'fetching' && 'opacity-50')} onPress={onSubmit}>
               <Text>Reset your password</Text>
             </Button>
           </View>

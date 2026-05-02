@@ -5,49 +5,61 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Text } from '@/components/ui/text';
-import { useSignIn } from '@clerk/clerk-expo';
-import { Link, router } from 'expo-router';
+import { cn } from '@/lib/utils';
+import { useSignIn } from '@clerk/expo';
+import { Link } from 'expo-router';
 import * as React from 'react';
 import { type TextInput, View } from 'react-native';
 
 export function SignInForm() {
-  const { signIn, setActive, isLoaded } = useSignIn();
+  const { signIn, fetchStatus } = useSignIn();
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const passwordInputRef = React.useRef<TextInput>(null);
   const [error, setError] = React.useState<{ email?: string; password?: string }>({});
 
   async function onSubmit() {
-    if (!isLoaded) {
+    if (fetchStatus === 'fetching') {
       return;
     }
 
     // Start the sign-in process using the email and password provided
     try {
-      const signInAttempt = await signIn.create({
+      const { error } = await signIn.password({
         identifier: email,
         password,
       });
 
+      if (error) {
+        const message = error.longMessage ?? error.message;
+        const isEmailMessage =
+          message.toLowerCase().includes('identifier') || message.toLowerCase().includes('email');
+        setError(isEmailMessage ? { email: message } : { password: message });
+        return;
+      }
+
+      if (signIn.status === 'needs_client_trust') {
+        setError({
+          password: 'Additional verification is required before this device can sign in.',
+        });
+        return;
+      }
+
       // If sign-in process is complete, set the created session as active
       // and redirect the user
-      if (signInAttempt.status === 'complete') {
+      if (signIn.status === 'complete') {
         setError({ email: '', password: '' });
-        await setActive({ session: signInAttempt.createdSessionId });
+        await signIn.finalize();
         return;
       }
       // TODO: Handle other statuses
-      console.error(JSON.stringify(signInAttempt, null, 2));
+      console.error(JSON.stringify(signIn, null, 2));
     } catch (err) {
       // See https://go.clerk.com/mRUDrIe for more info on error handling
-      if (err instanceof Error) {
-        const isEmailMessage =
-          err.message.toLowerCase().includes('identifier') ||
-          err.message.toLowerCase().includes('email');
-        setError(isEmailMessage ? { email: err.message } : { password: err.message });
-        return;
-      }
-      console.error(JSON.stringify(err, null, 2));
+      const message = err instanceof Error ? err.message : 'Something went wrong';
+      const isEmailMessage =
+        message.toLowerCase().includes('identifier') || message.toLowerCase().includes('email');
+      setError(isEmailMessage ? { email: message } : { password: message });
     }
   }
 
@@ -107,7 +119,7 @@ export function SignInForm() {
                 <Text className="text-sm font-medium text-destructive">{error.password}</Text>
               ) : null}
             </View>
-            <Button className="w-full" onPress={onSubmit}>
+            <Button className={cn("w-full", fetchStatus === 'fetching' && 'opacity-50')} onPress={onSubmit}>
               <Text>Continue</Text>
             </Button>
           </View>

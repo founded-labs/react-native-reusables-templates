@@ -1,8 +1,8 @@
 import '@/global.css';
 
 import { NAV_THEME } from '@/lib/theme';
-import { ClerkProvider, useAuth } from '@clerk/clerk-expo';
-import { tokenCache } from '@clerk/clerk-expo/token-cache';
+import { ClerkProvider, useAuth } from '@clerk/expo';
+import { tokenCache } from '@clerk/expo/token-cache';
 import { ThemeProvider } from '@react-navigation/native';
 import { PortalHost } from '@rn-primitives/portal';
 import { Stack } from 'expo-router';
@@ -10,6 +10,8 @@ import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useColorScheme } from 'nativewind';
 import * as React from 'react';
+
+const publishableKey = getPublishableKey();
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -20,7 +22,7 @@ export default function RootLayout() {
   const { colorScheme } = useColorScheme();
 
   return (
-    <ClerkProvider tokenCache={tokenCache}>
+    <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
       <ThemeProvider value={NAV_THEME[colorScheme ?? 'light']}>
         <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
         <Routes />
@@ -28,6 +30,16 @@ export default function RootLayout() {
       </ThemeProvider>
     </ClerkProvider>
   );
+}
+
+function getPublishableKey() {
+  const key = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
+
+  if (!key) {
+    throw new Error('Missing EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY');
+  }
+
+  return key;
 }
 
 SplashScreen.preventAutoHideAsync();

@@ -7,7 +7,7 @@ const buttonVariants = cva(
   cn(
     'group shrink-0 flex-row items-center justify-center gap-2 rounded-md shadow-none',
     Platform.select({
-      web: "focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive whitespace-nowrap transition-all outline-none focus-visible:ring-[3px] disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+      web: "focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive whitespace-nowrap outline-none transition-all focus-visible:ring-[3px] disabled:pointer-events-none [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0",
     })
   ),
   {
@@ -71,7 +71,7 @@ const buttonTextVariants = cva(
         ghost: 'group-active:text-accent-foreground',
         link: cn(
           'text-primary group-active:underline',
-          Platform.select({ web: 'underline-offset-4 group-hover:underline hover:underline' })
+          Platform.select({ web: 'underline-offset-4 hover:underline group-hover:underline' })
         ),
       },
       size: {

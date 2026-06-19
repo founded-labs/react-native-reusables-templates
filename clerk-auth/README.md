@@ -37,6 +37,32 @@ This will launch the Expo Go Server. You can open the app with:
 
 Or scan the QR code with the [Expo Go](https://expo.dev/go) app to test on your device.
 
+## Expo Go and Clerk
+
+This template uses Clerk's JavaScript custom flows so it can run in Expo Go. Clerk's native components and native sign-in hooks require a development build. See Clerk's [Expo quickstart](https://clerk.com/docs/expo/getting-started/quickstart) for the current Expo Go and development build options.
+
+Android Expo Go does not include Clerk's native `ClerkExpo` module. To keep the JavaScript-only flow working in Expo Go, this template includes:
+
+- `shims/clerk-expo-native-module.js`, which exports `null` for Clerk's optional native module.
+- The Android-only `resolveRequest` block in `metro.config.js`, which points Clerk's internal `NativeClerkModule` import to that shim.
+
+If you switch this template to a development build, you can remove the Expo Go shim:
+
+1. Delete `shims/clerk-expo-native-module.js`.
+2. Remove the `path` import, `expoGoClerkNativeModuleShim`, `resolveRequest`, and `config.resolver.resolveRequest` block from `metro.config.js`.
+3. Add Clerk's config plugin to `app.json` if you plan to use Clerk native components or native sign-in APIs:
+
+```json
+"plugins": [
+  "expo-router",
+  "expo-secure-store",
+  "expo-web-browser",
+  "expo-splash-screen",
+  "expo-status-bar",
+  "@clerk/expo"
+]
+```
+
 ## Included Screens and Features
 
 - Protected routes using Clerk authentication
